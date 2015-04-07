@@ -6,7 +6,7 @@ from Acquisition import aq_inner
 from Products.Five.browser import BrowserView
 
 
-class AssetRepositoryView(BrowserView):
+class AssetManagerView(BrowserView):
     """ Central management unit """
 
     def __call__(self):

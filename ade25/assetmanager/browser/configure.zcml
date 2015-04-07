@@ -1,8 +1,12 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:z3c="http://namespaces.zope.org/z3c"
-    i18n_domain="ade25.sitecontent">
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="ade25.assetmanager">
 
   <browser:page
       for="ade25.assetmanager.assetrepository.IAssetRepository"
@@ -14,7 +18,16 @@
       />
 
   <browser:page
-      for="ade25.assetmanager.behaviors.IAssetStorage"
+      for="ade25.assetmanager.stack.IStack"
+      name="stack_view"
+      class=".stack.StackView"
+      template="stack.pt"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
+  <browser:page
+      for="ade25.assetmanager.behaviors.storage.IAssetStorage"
       name="asset-manager"
       class=".assetmanager.AssetManagerView"
       template="assetmanager.pt"

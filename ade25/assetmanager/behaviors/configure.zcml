@@ -8,6 +8,13 @@
   <include package="plone.behavior" file="meta.zcml"/>
 
   <plone:behavior
+    title="Asset Manager"
+    description="Enable content type for asset management tool usage"
+    provides="ade25.assetmanager.interfaces.IAssetManagerEnabled"
+    for="plone.dexterity.interfaces.IDexterityContent"
+    />
+
+  <plone:behavior
     title="Asset Storage"
     description="Adds a field that stores JSON formated references to asigned assets"
     provides=".storage.IAssetStorage"

@@ -1,0 +1,19 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:plone="http://namespaces.plone.org/plone"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
+  i18n_domain="ade25.assetsmanager">
+
+  <include package="plone.behavior" file="meta.zcml"/>
+
+  <plone:behavior
+    title="Asset Storage"
+    description="Adds a field that stores JSON formated references to asigned assets"
+    provides=".storage.IAssetStorage"
+    factory=".storage.IAssetStorage"
+    for="plone.dexterity.interfaces.IDexterityContent"
+    marker=".storage.IAssetStorage"
+    />
+
+</configure>

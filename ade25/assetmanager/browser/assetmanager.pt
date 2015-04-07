@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="ade25.assetmanager">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+
+    <div class="ws-header">
+      <a class="ws-close icono-cross" href="${context/absolute_url}">
+        &times;</a>
+      <h1 class="app-signin-title">
+        Medien Manager
+      </h1>
+    </div>
+
+    <div class="app-page-block"
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        <div class="app-page-block-content app-page-block-main">
+          <aside class="ws-aside">
+            <p class="app-page-lead">
+              Bilder und Videos verwalten
+            </p>
+            <hr>
+            <p tal:condition="view/has_images">
+              Laden Sie Bilder zu Ihrem Stellplatz hoch oder hinterlegen Sie
+              eine URL zu einem Video auf YouTube oder Vimeo.
+            </p>
+            <p>Das Hauptbild wird in Auflistungen, wie z.B. auf der Startseite
+              vom reisemobilstellplaetze.com, gezeigt.</p>
+            <p tal:condition="not:view/has_images">
+              Sie haben noch kein Bild hochgeladen. Sie sollten wenigstens
+              ein Hauptbild anlegen, damit wir eine Vorschau Ihres Stellplatzes
+              in Auflistungen zeigen können.
+            </p>
+          </aside>
+        </div>
+        <div class="app-page-block-content app-page-block-aside">
+          <div class="app-workspace-card">
+            <a class="ws-action"
+              href="${context/absolute_url}/@@image-factory/${view/rvs_uid}"
+              i18n:translate="">
+              Add image
+            </a>
+            <a class="ws-action"
+              href="${context/absolute_url}/@@video-factory/${view/rvs_uid}"
+              i18n:translate="">
+              Add video
+            </a>
+          </div>
+        </div>
+    </div>
+
+    <div class="app-page-body app-workspace-content">
+    </div>
+  </metal:content-core>
+</metal:main>
+</body>
+</html>

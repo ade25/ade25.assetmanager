@@ -9,7 +9,16 @@
       name="repository_view"
       class=".repository.AssetRepositoryView"
       template="repository.pt"
-      permission="zope2.View"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
+  <browser:page
+      for="ade25.assetmanager.behaviors.IAssetStorage"
+      name="asset-manager"
+      class=".assetmanager.AssetManagerView"
+      template="assetmanager.pt"
+      permission="cmf.ModifyPortalContent"
       layer="..interfaces.IAde25AssetmanagerLayer"
       />
 

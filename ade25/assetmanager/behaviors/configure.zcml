@@ -16,7 +16,7 @@
 
   <plone:behavior
     title="Asset Storage"
-    description="Adds a field that stores JSON formated references to asigned assets"
+    description="Adds a field that stores JSON formated references to asigned assets and enable asset manager"
     provides=".storage.IAssetStorage"
     factory=".storage.IAssetStorage"
     for="plone.dexterity.interfaces.IDexterityContent"

@@ -1,21 +1,13 @@
-# ade25.assetmanager
+# Ade25 Asset Manager
 
-## An asset manager for Plone projects
+## Introduction
 
-* `Source code @ GitHub <https://github.com/potzenheimer/ade25.assetmanager>`_
-* `Releases @ PyPI <http://pypi.python.org/pypi/ade25.assetmanager>`_
-* `Documentation @ ReadTheDocs <http://ade25assetmanager.readthedocs.org>`_
-* `Continuous Integration @ Travis-CI <http://travis-ci.org/potzenheimer/ade25.assetmanager>`_
+This package provides an installable python package that can be used to setup
+a general storage and management facility for static assets inside a
+Plone project.
 
-## How it works
-
-This package provides a Plone addon as an installable Python egg package.
-
-The generated Python package holds an example content type `ContentPage` which
-provides a folderish version of the default **Page** document type.
-
-The implementation is kept simple on purpose and asumes that the developer will
-add further content manually.
+* `Source code @ GitHub <https://github.com/ade25/ade25.assetmanager>`_
+* `Continuous Integration @ Travis-CI <http://travis-ci.org/ade25/ade25.assetmanager>`_
 
 
 ## Installation
@@ -23,3 +15,11 @@ add further content manually.
 To install `ade25.assetmanager` you simply add ``ade25.assetmanager``
 to the list of eggs in your buildout, run buildout and restart Plone.
 Then, install `ade25.assetmanager` using the Add-ons control panel.
+
+
+## Configuration
+
+The configuration is done by the package generic setup profile. In order to use this package you must first add a `AssetRepository` folder inside an
+existing Plone site.
+
+The package does not asume any site specific usecase though it was originally concieved for a showreel and project listing usecase. Therefore the asset management is delegated to a Dexterity behavior that enables asset manager views.

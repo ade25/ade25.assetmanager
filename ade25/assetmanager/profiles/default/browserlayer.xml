@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layers>
+  <layer
+    name="ade25.assetmanager"
+    interface="ade25.assetmanager.interfaces.IAde25AssetmanagerLayer"
+  />
+</layers>

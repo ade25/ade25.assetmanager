@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    i18n_domain="ade25.sitecontent">
+
+  <browser:page
+      for="ade25.assetmanager.assetrepository.IAssetRepository"
+      name="repository_view"
+      class=".repository.AssetRepositoryView"
+      template="repository.pt"
+      permission="zope2.View"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
+</configure>

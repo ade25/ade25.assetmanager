@@ -38,6 +38,31 @@
           </div>
       </div>
 
+      <div class="app-page-body">
+        <div class="app-card app-card-lg app-card-statusinfo"
+          tal:condition="not:view/has_assets">
+            <div class="app-card-header">
+              <figure class="app-card-figure">
+                <img class="app-img app-card-image-img b-lazy"
+                  src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                  data-src="{{ page.base_url }}assets/img/wertach01.jpg"
+                  alt="Pitch title" />
+                <figcaption>No sets available yet</figcaption>
+              </figure>
+            </div>
+            <div class="app-card-content">
+              This media repository appears to be empty
+            </div>
+            <div class="app-card-footer app-card-actions">
+              <a class="btn btn-default"
+                href="${context/absolute_url}/@@select-stack">
+                <i class="ion ion-ios7-photos-outline"></i>
+                <span i18n:translate="">Add set</span>
+            </a>
+            </div>
+        </div>
+      </div>
+
       <div class="app-page-body app-workspace-content">
         <tal:block tal:condition="not:view/has_assets">
           <div class="ws-section">

@@ -9,53 +9,54 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
+    <div class="app-asset-manager app-am">
+      <div class="app-page-header am-header">
+        <a class="am-close icono-cross" href="${context/absolute_url}">
+          &times;</a>
+        <h1 class="app-page-title am-title">
+          Medien Manager
+        </h1>
+      </div>
 
-    <div class="ws-header">
-      <a class="ws-close icono-cross" href="${context/absolute_url}">
-        &times;</a>
-      <h1 class="app-signin-title">
-        Medien Manager
-      </h1>
-    </div>
-
-    <div class="app-page-block"
-        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-        <div class="app-page-block-content app-page-block-main">
-          <aside class="ws-aside">
-            <p class="app-page-lead">
-              Bilder und Videos verwalten
-            </p>
-            <hr>
-            <p tal:condition="view/has_images">
-              Laden Sie Bilder zu Ihrem Stellplatz hoch oder hinterlegen Sie
-              eine URL zu einem Video auf YouTube oder Vimeo.
-            </p>
-            <p>Das Hauptbild wird in Auflistungen, wie z.B. auf der Startseite
-              vom reisemobilstellplaetze.com, gezeigt.</p>
-            <p tal:condition="not:view/has_images">
-              Sie haben noch kein Bild hochgeladen. Sie sollten wenigstens
-              ein Hauptbild anlegen, damit wir eine Vorschau Ihres Stellplatzes
-              in Auflistungen zeigen können.
-            </p>
-          </aside>
-        </div>
-        <div class="app-page-block-content app-page-block-aside">
-          <div class="app-workspace-card">
-            <a class="ws-action"
-              href="${context/absolute_url}/@@image-factory/${view/rvs_uid}"
-              i18n:translate="">
-              Add image
-            </a>
-            <a class="ws-action"
-              href="${context/absolute_url}/@@video-factory/${view/rvs_uid}"
-              i18n:translate="">
-              Add video
-            </a>
+      <div class="app-page-block"
+          tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+          <div class="app-page-block-content app-page-block-main">
+            <aside class="ws-aside">
+              <p class="app-page-lead">
+                Edit static asset assignements for this content object
+              </p>
+            </aside>
           </div>
-        </div>
-    </div>
+          <div class="app-page-block-content app-page-block-aside">
+            <div class="app-workspace-card">
+              <a class="ws-action"
+                href="${context/absolute_url}/++add++Image"
+                i18n:translate="">
+                Add image
+              </a>
+            </div>
+          </div>
+      </div>
 
-    <div class="app-page-body app-workspace-content">
+      <div class="app-page-body app-workspace-content">
+        <tal:block tal:condition="not:view/has_assets">
+          <div class="ws-section">
+            <div class="ws-section-row">
+              <div class="ws-section-content">
+                <h3><a href="${context/absolute_url}/@@image-factory/${context/UID}">Main image</a></h3>
+                <p class="ws-section-desc">
+                  Add main image serving as a preview in listings and search results
+                </p>
+              </div>
+              <div class="ws-section-chevron">
+                <a href="${context/absolute_url}/@@image-factory/${context/UID}">
+                  <i class="icono-caretRight app-icon-anchor ws-icon-next" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div><!-- /ws-section -->
+        </tal:block>
+      </div>
     </div>
   </metal:content-core>
 </metal:main>

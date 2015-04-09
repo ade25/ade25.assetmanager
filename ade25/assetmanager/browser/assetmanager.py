@@ -21,3 +21,18 @@ class AssetManagerView(BrowserView):
 
     def stored_data(self):
         return json.loads(self.assets())
+
+
+class SelectStack(BrowserView):
+    """ Select asset stack """
+    raise NotImplementedError
+
+
+class SelectAsset(BrowserView):
+    """ Select assets from preselected stack """
+    raise NotImplementedError
+
+
+class AssignAsset(BrowserView):
+    """ Assign asset to context specific asset storage """
+    raise NotImplementedError

@@ -26,11 +26,39 @@
       layer="..interfaces.IAde25AssetmanagerLayer"
       />
 
+  <!-- Asset Manager views -->
   <browser:page
       for="ade25.assetmanager.behaviors.storage.IAssetStorage"
       name="asset-manager"
       class=".assetmanager.AssetManagerView"
       template="assetmanager.pt"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
+  <browser:page
+      for="ade25.assetmanager.behaviors.storage.IAssetStorage"
+      name="select-stack"
+      class=".assetmanager.SelectStack"
+      template="selectstack.pt"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
+  <browser:page
+      for="ade25.assetmanager.behaviors.storage.IAssetStorage"
+      name="select-asset"
+      class=".assetmanager.SelectAsset"
+      template="selectasset.pt"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
+  <browser:page
+      for="ade25.assetmanager.behaviors.storage.IAssetStorage"
+      name="assign-asset"
+      class=".assetmanager.AssignAsset"
+      template="assignasset.pt"
       permission="cmf.ModifyPortalContent"
       layer="..interfaces.IAde25AssetmanagerLayer"
       />

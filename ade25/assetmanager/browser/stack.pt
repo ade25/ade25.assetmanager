@@ -22,7 +22,55 @@
             management for static assets like images
         </p>
       </div>
-      <div class="app-page-body">
+
+      <div class="app-page-body app-repository-content">
+          <div class="app-repository-toolbar">
+            <a class="btn btn-link pull-right" href="#"
+              tal:attributes="href string:${context/absolute_url}/++add++Image">
+              <i class="ion ion-ios7-upload-outline app-icon-lg"></i>
+              <span i18n:translate="">Add image</span>
+            </a>
+            <a class="btn btn-link pull-right" href="#"
+              tal:attributes="href string:${context/absolute_url}/folder_contents">
+              <i class="ion ion-ios7-photos-outline app-icon-lg"></i>
+              <span i18n:translate="">Manage images</span>
+            </a>
+            <div class="app-repository-toolbar-title">Image Stack</div>
+          </div>
+            <div class="app-listing app-listing-cards"
+              tal:define="Batch python:modules['Products.CMFPlone'].Batch;
+                          b_size python:int(request.get('b_size', 20));
+                          b_start python:int(request.get('b_start', 0));
+                          results python:context.restrictedTraverse('@@folderListing')(batch=True, b_size=b_size, b_start=b_start);
+                          batch python:Batch(results, b_size, b_start);">
+                <div class="app-listing-card" tal:repeat="item results">
+                  <div class="app-card app-card-image"
+                      <div class="app-card-media">
+                          <img class="app-img lazyload"
+                              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                              tal:define="item_obj item/getObject;
+                                          scales item_obj/@@images;
+                                          thumbnail python: scales.scale('image', width=250, height=250);"
+                              tal:condition="thumbnail"
+                              tal:attributes="data-src thumbnail/url;
+                                              src thumbnail/url;
+                                              width thumbnail/width;
+                                              height thumbnail/height" />
+                      </div>
+                      <div class="app-card-info app-card-caption">
+                        <div class="app-card-title" tal:content="item/Title" />
+                      </div>
+                      <div class="app-card-footer">
+                        <a class="btn btn-default btn-sm"
+                          tal:attributes="href string:${context/absolute_url}/@@asset-editor/${item/UID}">
+                          Edit <i class="fa fa-angle-right"></i>
+                        </a>
+                </div>
+            </div>
+            <div class="app-listing-nav">
+              <div metal:use-macro="context/batch_macros/macros/navigation" />
+            </div>
+          </div>
       </div>
     </div>
 

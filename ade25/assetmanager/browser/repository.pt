@@ -17,12 +17,58 @@
               Asset Manager
             </h1>
         </div>
-        <p class="app-page-abstract" tal:condition="context/Description">
-            Central assets repository providing language independent storage and
-            management for static assets like images
-        </p>
       </div>
+
       <div class="app-page-body">
+
+        <div class="app-page-block"
+            tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+            <div class="app-page-block-content app-page-block-main">
+              <aside class="ws-aside">
+                <p class="app-page-abstract">
+                  Central assets repository providing language independent storage and
+                  management for static assets like images
+                </p>
+              </aside>
+            </div>
+            <div class="app-page-block-content app-page-block-aside">
+              <div class="app-workspace-card">
+                <a class="ws-action"
+                  href="${context/absolute_url}/++add++ade25.assetmanager.stack"
+                  i18n:translate="">
+                  Add new set
+                </a>
+              </div>
+            </div>
+        </div>
+
+        <div class="app-page-section"
+          tal:define="Batch python:modules['Products.CMFPlone'].Batch;
+                      b_size python:int(request.get('b_size', 20));
+                      b_start python:int(request.get('b_start', 0));
+                      results python:context.restrictedTraverse('@@folderListing')(batch=True, b_size=b_size, b_start=b_start);
+                      batch python:Batch(results, b_size, b_start);">
+          <div class="app-cards app-card-gutter" tal:condition="results">
+            <tal:block tal:repeat="card results">
+              <div class="app-card">
+                <div class="app-card-header">
+                  <div class="app-card-title">
+                    ${card/Title}
+                  </div>
+                </div>
+                <div class="app-card-content">
+                  ${card/Title}
+                </div>
+                <div class="app-card-footer">
+                  <a class="btn btn-default app-card-btn" href="${card/absolute_url}">
+                    Show contents
+                  </a>
+                </div>
+              </div>
+            </tal:block>
+          </div>
+        </div>
+
       </div>
     </div>
 

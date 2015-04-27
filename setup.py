@@ -33,6 +33,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
+        'plone.api',
         'plone.app.dexterity [grok, relations]',
         'plone.app.relationfield',
         'plone.namedfile [blobs]',

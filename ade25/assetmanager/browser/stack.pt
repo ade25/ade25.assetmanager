@@ -17,17 +17,32 @@
               Asset Stack
             </h1>
         </div>
-        <p class="app-page-abstract" tal:condition="context/Description">
-            Central assets repository providing language independent storage and
-            management for static assets like images
-        </p>
       </div>
 
       <div class="app-page-body app-repository-content">
-          <div class="panel panel-default">
-            Addable types list:
-            <pre tal:replace="view/addable_media_types" />
-          </div>
+
+        <div class="app-page-block"
+            tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+            <div class="app-page-block-content app-page-block-main">
+              <aside class="ws-aside">
+                <p class="app-page-abstract">
+                  A dedicated stack or set of related and grouped media assets
+                </p>
+              </aside>
+            </div>
+            <div class="app-page-block-content app-page-block-aside">
+              <div class="app-workspace-card">
+                <tal:block tal:repeat="item view/addable_media_types">
+                  <a class="ws-action"
+                    href="${context/absolute_url}/++add++${item/factory}"
+                    tal:attributes="title item/Description">
+                    <span i18n:translate="">Add new</span>
+                    ${item/Title}
+                  </a>
+                </tal:block>
+              </div>
+            </div>
+        </div>
           <div class="app-repository-toolbar">
             <a class="btn btn-link pull-right" href="#"
               tal:attributes="href string:${context/absolute_url}/++add++Image">
@@ -37,7 +52,7 @@
             <a class="btn btn-link pull-right" href="#"
               tal:attributes="href string:${context/absolute_url}/folder_contents">
               <i class="ion ion-ios7-photos-outline app-icon-lg"></i>
-              <span i18n:translate="">Manage images</span>
+              <span i18n:translate="">Manage assets</span>
             </a>
             <div class="app-repository-toolbar-title">Image Stack</div>
           </div>

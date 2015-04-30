@@ -83,17 +83,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="app-card-footer">
-                  <a class="btn btn-default app-card-btn" href="${card/absolute_url}">
-                    Show contents
-                  </a>
-                </div>
                 <div class="app-card-footer"
                   tal:define="uuid card/UID;
                               item_idx python:view.item_index(uuid)">
                   <a class="btn btn-default btn-sm"
                     tal:attributes="href string:${card/getURL}">
-                    <span i18n:translate="">Images</span>
+                    <span i18n:translate="">Show contents</span>
                     <span class="badge" tal:content="item_idx">4</span>
                   </a>
                 </div>

@@ -57,11 +57,44 @@
                   </div>
                 </div>
                 <div class="app-card-content">
-                  ${card/Title}
+                  <div class="app-card-media"
+                    tal:define="uuid card/UID;
+                                item_idx python:view.item_index(uuid);
+                                preview_image python:view.preview_image(uuid)">
+                    <tal:preview tal:condition="preview_image">
+                      <img class="app-img lazyload"
+                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                          tal:define="item_obj preview_image;
+                                      scales preview_image/@@images;
+                                      thumbnail python: scales.scale('image', width=250, height=250);"
+                          tal:condition="thumbnail"
+                          tal:attributes="data-src thumbnail/url;
+                                          src thumbnail/url;
+                                          width thumbnail/width;
+                                          height thumbnail/height" />
+                    </tal:preview>
+                    <div class="app-card-placeholder"
+                        tal:condition="not:preview_image"
+                        tal:define="portal_url context/portal_url">
+                        <div class="no-data-sign">
+                          <i class="ion ion-ios7-more-outline app-icon-lg"></i>
+                        </div>
+                        <div class="no-data-title" i18n:translate="">This stack is empty</div>
+                    </div>
+                  </div>
                 </div>
                 <div class="app-card-footer">
                   <a class="btn btn-default app-card-btn" href="${card/absolute_url}">
                     Show contents
+                  </a>
+                </div>
+                <div class="app-card-footer"
+                  tal:define="uuid card/UID;
+                              item_idx python:view.item_index(uuid)">
+                  <a class="btn btn-default btn-sm"
+                    tal:attributes="href string:${card/getURL}">
+                    <span i18n:translate="">Images</span>
+                    <span class="badge" tal:content="item_idx">4</span>
                   </a>
                 </div>
               </div>

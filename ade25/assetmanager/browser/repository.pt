@@ -13,7 +13,7 @@
     <div class="app-asset-repository">
       <div class="app-page-header">
         <div class="app-page-title">
-            <h1 class="app-page-headline" tal:content="context/Title">
+            <h1 class="app-page-headline" i18n:translate="">
               Asset Manager
             </h1>
         </div>

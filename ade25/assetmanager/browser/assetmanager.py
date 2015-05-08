@@ -36,18 +36,14 @@ class AssetManagerView(BrowserView):
 class SelectStack(BrowserView):
     """ Select asset stack """
 
-    def __call__(self):
-        self.has_stacks = len(self.stacks()) > 0
-        return self.render()
-
-    def render(self):
-        return self.index()
-
     def stacks(self):
         catalog = api.portal.get_tool(name='portal_catalog')
         stacks = catalog(object_provides=IStack.__identifier__,
                          sort_on='getObjPositionInParent')
         return stacks
+
+    def has_stacks(self):
+        return len(self.stacks()) > 0
 
     def contained_items(self, uuid):
         stack = api.content.get(UID=uuid)

@@ -8,7 +8,9 @@ from Acquisition import aq_inner
 from Products.Five.browser import BrowserView
 from plone import api
 from plone.app.blob.interfaces import IATBlobImage
+from zope.component import getUtility
 
+from ade25.assetmanager.interfaces import IAssetAssignmentTool
 from ade25.assetmanager.stack import IStack
 
 
@@ -109,7 +111,7 @@ class AssignAsset(BrowserView):
         context = aq_inner(self.context)
         base_url = context.absolute_url()
         stack = self.traverse_subpath[0]
-        next_url = '{0}/@@select-images/{1}'.format(base_url, stack)
+        next_url = '{0}/@@select-asset/{1}'.format(base_url, stack)
         self._add_item()
         return self.request.response.redirect(next_url)
 
@@ -117,7 +119,8 @@ class AssignAsset(BrowserView):
         context = aq_inner(self.context)
         data = getattr(context, 'assets')
         if data is None:
-            data = dict()
+            tool = getUtility(IAssetAssignmentTool)
+            data = tool.create()
         return data
 
     def stored_data(self):

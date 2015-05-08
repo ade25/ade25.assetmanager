@@ -23,7 +23,7 @@ class AssetAssignmentTool(object):
         setattr(item, 'assets', json_data)
         modified(item)
         item.reindexObject(idxs='modified')
-        return uuid
+        return json_data
 
     @memoize
     def read(self, uuid, key=None):
@@ -32,8 +32,7 @@ class AssetAssignmentTool(object):
         data = json.loads(stored)
         if key is not None:
             records = data['items']
-            record = records[0]
-            data = record[key]
+            data = records[int(key)]
         return data
 
     def update(self, uuid, data, key=None):

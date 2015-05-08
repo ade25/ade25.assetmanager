@@ -27,7 +27,7 @@ class IAssetAssignmentTool(Interface):
         The caller is responsible for passing a valid data dictionary
         containing the necessary details
 
-        Returns UID
+        Returns JSON object
 
         @param uuid:        content object UID
         @param data:        predefined initial data dictionary

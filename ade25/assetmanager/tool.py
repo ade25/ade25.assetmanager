@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module providing an image asset asignment factory."""
+import datetime
 import json
 import time
+import uuid as uuid_tool
 from Products.CMFPlone.utils import safe_unicode
 from plone import api
 from plone.memoize.view import memoize
@@ -14,7 +16,7 @@ class AssetAssignmentTool(object):
     def create(self, uuid, data):
         item = api.content.get(UID=uuid)
         start = time.time()
-        initial_data = self._create_record(uuid, data)
+        initial_data = self._create_record(uuid, item, data)
         end = time.time()
         initial_data.update(dict(_runtime=end-start))
         json_data = json.dumps(initial_data)
@@ -34,6 +36,25 @@ class AssetAssignmentTool(object):
             data = record[key]
         return data
 
+    def update(self, uuid, data, key=None):
+        stored = self.read(uuid)
+        start = time.time()
+        if key is not None:
+            records = stored['items']
+            records[key] = data
+        else:
+            stored = data
+        end = time.time()
+        stored.update(dict(_runtime=end-start,
+                           timestamp=str(int(time.time())),
+                           updated=str(datetime.datetime.now())))
+        updated = json.dumps(stored)
+        item = api.content.get(UID=uuid)
+        setattr(item, 'assets', updated)
+        modified(item)
+        item.reindexObject(idxs='modified')
+        return uuid
+
     def delete(self, uuid, key=None):
         stored = self.read(uuid)
         if key is not None:
@@ -44,6 +65,18 @@ class AssetAssignmentTool(object):
             modified(item)
             item.reindexObject(idxs='modified')
         return uuid
+
+    def _create_record(self, uuid, item, data):
+        records = {
+            "id": str(uuid_tool.uuid4()),
+            "uid": uuid,
+            "timestamp": str(int(time.time())),
+            "_runtime": "0.0000059604644775390625",
+            "created": datetime.datetime.now().isoformat(),
+            "title": item.Title(),
+            "items": []
+        }
+        return records
 
     def safe_encode(self, value):
         """Return safe unicode version of value.

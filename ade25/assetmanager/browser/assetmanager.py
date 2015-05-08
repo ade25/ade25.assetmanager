@@ -137,4 +137,8 @@ class AssignAsset(BrowserView):
         }
         items.append(item)
         data['items'] = items
+        tool = getUtility(IAssetAssignmentTool)
+        context = aq_inner(self.context)
+        context_uid = api.content.get_uuid(obj=context)
+        data = tool.update(context_uid, data)
         return data

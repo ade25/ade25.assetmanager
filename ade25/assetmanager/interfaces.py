@@ -27,33 +27,33 @@ class IAssetAssignmentTool(Interface):
         The caller is responsible for passing a valid data dictionary
         containing the necessary details
 
-        Returns processing status codes SUCCESS/ERROR
+        Returns UID
 
-        @param uuid:        caravan site object UID
+        @param uuid:        content object UID
         @param data:        predefined initial data dictionary
         """
 
     def read(context):
-        """ Read stored data from carvan site object
+        """ Read stored data from object
 
         Returns a dictionary
 
-        @param uuid:        caravan site object UID
+        @param uuid:        object UID
         @param key:         (optional) dictionary item key
         """
 
     def update(context):
-        """ Read stored data from carvan site object
+        """ Update stored data from object
 
         Returns a dictionary
 
-        @param uuid:        caravan site object UID
+        @param uuid:        object UID
         @param key:         (optional) dictionary item key
         @param data:        data dictionary
         """
 
     def delete(context):
-        """ Read stored data from carvan site object
+        """ Delete stored data from object
 
         Returns a dictionary
 

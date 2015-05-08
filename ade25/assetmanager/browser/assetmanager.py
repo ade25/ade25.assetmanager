@@ -9,6 +9,7 @@ from Products.Five.browser import BrowserView
 from plone import api
 from plone.app.blob.interfaces import IATBlobImage
 from zope.component import getUtility
+from zope.lifecycleevent import modified
 
 from ade25.assetmanager.interfaces import IAssetAssignmentTool
 from ade25.assetmanager.stack import IStack
@@ -112,7 +113,8 @@ class AssignAsset(BrowserView):
         base_url = context.absolute_url()
         stack = self.traverse_subpath[0]
         next_url = '{0}/@@select-asset/{1}'.format(base_url, stack)
-        self._add_item()
+        uuid = self._add_item()
+        self._propagate('update', uuid)
         return self.request.response.redirect(next_url)
 
     def assets(self):
@@ -142,3 +144,19 @@ class AssignAsset(BrowserView):
         context_uid = api.content.get_uuid(obj=context)
         data = tool.update(context_uid, data)
         return data
+
+    def _propagate(self, action, uuid):
+        pid = self.project_uid()
+        stack = api.content.get(UID=uuid)
+        assignments = getattr(stack, 'assignments')
+        plist = list()
+        if assignments is not None:
+            plist = json.loads(assignments)
+        if action == 'delete' and len(plist):
+            plist.remove(pid)
+        else:
+            plist.append(pid)
+        setattr(stack, 'assignments', json.dumps(plist))
+        modified(stack)
+        stack.reindexObject(idxs='modified')
+        return 'success'

@@ -2,8 +2,9 @@
 """Module providing an image asset asignment factory."""
 import json
 import time
-from plone import api
 from Products.CMFPlone.utils import safe_unicode
+from plone import api
+from plone.memoize.view import memoize
 from zope.lifecycleevent import modified
 
 
@@ -22,6 +23,7 @@ class AssetAssignmentTool(object):
         item.reindexObject(idxs='modified')
         return uuid
 
+    @memoize
     def read(self, uuid, key=None):
         item = api.content.get(UID=uuid)
         stored = getattr(item, 'assets')

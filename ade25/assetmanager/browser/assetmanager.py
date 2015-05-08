@@ -17,6 +17,10 @@ class AssetManagerView(BrowserView):
 
     def __call__(self):
         self.has_assets = len(self.assets()) > 0
+        return self.render()
+
+    def render(self):
+        return self.index()
 
     def assets(self):
         context = aq_inner(self.context)
@@ -34,6 +38,10 @@ class SelectStack(BrowserView):
 
     def __call__(self):
         self.has_stacks = len(self.stacks()) > 0
+        return self.render()
+
+    def render(self):
+        return self.index()
 
     def stacks(self):
         catalog = api.portal.get_tool(name='portal_catalog')
@@ -63,6 +71,10 @@ class SelectAsset(BrowserView):
 
     def __call__(self):
         self.has_assets = len(self.contained_assets()) > 0
+        return self.render()
+
+    def render(self):
+        return self.index()
 
     @property
     def traverse_subpath(self):

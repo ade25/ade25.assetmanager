@@ -25,7 +25,8 @@
           </div>
           <div class="pm-locator">Select Asset</div>
         </div>
-        <div class="app-page-body app-asset-manager">
+        <div class="app-page-body app-asset-manager"
+          tal:define="stack_uid python:view.traverse_subpath[0]">
             <div class="app-asset-list" tal:condition="view/has_assets">
                     <div class="app-asset-list-item"
                       tal:repeat="item view/contained_assets">
@@ -44,7 +45,7 @@
                         <h5 tal:content="item/Title" />
                       </div>
                       <div class="app-list-metric app-list-metric-action">
-                          <a class="metric-action" href="${context/absolute_url}/@@select-images/${item/UID}">
+                          <a class="metric-action" href="${context/absolute_url}/@@assign-asset/${stack_uid}/${item/UID}">
                             <span i18n:translate="">Select</span>
                             <i class="ion ion-ios7-arrow-right pm-icon"></i>
                           </a>

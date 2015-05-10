@@ -13,7 +13,7 @@ from zope.lifecycleevent import modified
 class AssetAssignmentTool(object):
     """ Factory providing CRUD oparations for project assets """
 
-    def create(self, uuid, data):
+    def create(self, uuid, data=None):
         item = api.content.get(UID=uuid)
         start = time.time()
         initial_data = self._create_record(uuid, item, data)
@@ -25,11 +25,13 @@ class AssetAssignmentTool(object):
         item.reindexObject(idxs='modified')
         return json_data
 
-    @memoize
+    # @memoize
     def read(self, uuid, key=None):
         item = api.content.get(UID=uuid)
-        stored = getattr(item, 'assets')
-        data = json.loads(stored)
+        stored = getattr(item, 'assets', dict())
+        data = dict()
+        if stored is not None:
+            data = json.loads(stored)
         if key is not None:
             records = data['items']
             data = records[int(key)]
@@ -68,7 +70,7 @@ class AssetAssignmentTool(object):
     def _create_record(self, uuid, item, data):
         records = {
             "id": str(uuid_tool.uuid4()),
-            "uid": uuid,
+            "uid": str(uuid),
             "timestamp": str(int(time.time())),
             "_runtime": "0.0000059604644775390625",
             "created": datetime.datetime.now().isoformat(),

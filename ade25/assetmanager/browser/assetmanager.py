@@ -113,16 +113,17 @@ class AssignAsset(BrowserView):
         base_url = context.absolute_url()
         stack = self.traverse_subpath[0]
         next_url = '{0}/@@select-asset/{1}'.format(base_url, stack)
-        uuid = self._add_item()
-        self._propagate('update', uuid)
+        self._add_item()
+        self._propagate('update', stack)
         return self.request.response.redirect(next_url)
 
     def assets(self):
         context = aq_inner(self.context)
+        context_uid = api.content.get_uuid(obj=context)
         data = getattr(context, 'assets')
         if data is None:
             tool = getUtility(IAssetAssignmentTool)
-            data = tool.create()
+            data = tool.create(context_uid)
         return data
 
     def stored_data(self):
@@ -133,7 +134,7 @@ class AssignAsset(BrowserView):
         uid = self.traverse_subpath[1]
         items = data['items']
         item = {
-            'id': uuid_tool.uuid4(),
+            'id': str(uuid_tool.uuid4()),
             'uid': uid,
             'caption': ''
         }
@@ -146,7 +147,8 @@ class AssignAsset(BrowserView):
         return data
 
     def _propagate(self, action, uuid):
-        pid = self.project_uid()
+        context = aq_inner(self.context)
+        pid = api.content.get_uuid(obj=context)
         stack = api.content.get(UID=uuid)
         assignments = getattr(stack, 'assignments')
         plist = list()

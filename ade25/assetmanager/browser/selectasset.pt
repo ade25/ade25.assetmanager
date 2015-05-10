@@ -26,8 +26,32 @@
           <div class="pm-locator">Select Asset</div>
         </div>
         <div class="app-page-body app-asset-manager">
-            <div class="app-asset-listing">
-            </div>
+            <div class="app-asset-list" tal:condition="view/has_assets">
+                    <div class="app-asset-list-item"
+                      tal:repeat="item view/contained_assets">
+                      <div class="app-list-metric app-list-metric-thumb">
+                        <img class="app-img lazyload"
+                              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                              tal:define="item_obj item/getObject;
+                                          scales item_obj/@@images;
+                                          thumbnail python: scales.scale('image', width=50, height=50);"
+                              tal:condition="thumbnail"
+                              tal:attributes="data-src thumbnail/url;
+                                              width thumbnail/width;
+                                              height thumbnail/height" />
+                      </div>
+                      <div class="app-list-metric app-list-metric-data">
+                        <h5 tal:content="item/Title" />
+                      </div>
+                      <div class="app-list-metric app-list-metric-action">
+                          <a class="metric-action" href="${context/absolute_url}/@@select-images/${item/UID}">
+                            <span i18n:translate="">Select</span>
+                            <i class="ion ion-ios7-arrow-right pm-icon"></i>
+                          </a>
+                      </div>
+                    </div>
+              </div>
+
         </div>
     </div>
   </metal:content-core>

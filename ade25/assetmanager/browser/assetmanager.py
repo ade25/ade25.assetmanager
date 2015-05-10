@@ -56,7 +56,7 @@ class SelectStack(BrowserView):
         return len(self.contained_items(uuid))
 
     def preview_image(self, uuid):
-        images = self.contained_images(uuid)
+        images = self.contained_items(uuid)
         preview = None
         if len(images):
             first_item = images[0].getObject()

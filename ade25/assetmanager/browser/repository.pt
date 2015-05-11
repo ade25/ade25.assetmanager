@@ -12,35 +12,23 @@
 
     <div class="app-asset-repository">
       <div class="app-page-header">
-        <div class="app-page-title">
-            <h1 class="app-page-headline" i18n:translate="">
-              Asset Manager
-            </h1>
+        <div class="app-page-block app-page-toolbar"
+          tal:define="context_state context/@@plone_context_state;
+                      parent context_state/parent">
+          <div class="app-page-block-content app-page-toolbar-title">
+            <div class="app-page-toolbar-name">Media Manager</div>
+            <small>Store and manage site assets in predefined sets</small>
+          </div>
+          <div class="app-page-block-aside">
+            <a class="app-page-toolbar-action" href="#"
+              tal:attributes="href string:${context/absolute_url}/++add++ade25.assetmanager.stack">
+              <span i18n:translate="">Add new set</span>
+            </a>
+          </div>
         </div>
       </div>
 
       <div class="app-page-body">
-
-        <div class="app-page-block"
-            tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-            <div class="app-page-block-content app-page-block-main">
-              <aside class="ws-aside">
-                <p class="app-page-abstract">
-                  Central assets repository providing language independent storage and
-                  management for static assets like images
-                </p>
-              </aside>
-            </div>
-            <div class="app-page-block-content app-page-block-aside">
-              <div class="app-workspace-card">
-                <a class="ws-action"
-                  href="${context/absolute_url}/++add++ade25.assetmanager.stack"
-                  i18n:translate="">
-                  Add new set
-                </a>
-              </div>
-            </div>
-        </div>
 
         <div class="app-page-section"
           tal:define="Batch python:modules['Products.CMFPlone'].Batch;
@@ -79,7 +67,7 @@
                         <div class="no-data-sign">
                           <i class="ion ion-ios7-more-outline app-icon-lg"></i>
                         </div>
-                        <div class="no-data-title" i18n:translate="">This stack is empty</div>
+                        <div class="no-data-title" i18n:translate="">This set is empty</div>
                     </div>
                   </div>
                 </div>

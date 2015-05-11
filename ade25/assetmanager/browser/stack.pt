@@ -12,10 +12,39 @@
 
     <div class="app-asset-repository">
       <div class="app-page-header">
-        <div class="app-page-title">
-            <h1 class="app-page-headline" tal:content="context/Title">
-              Asset Stack
-            </h1>
+        <div class="app-page-block app-page-toolbar"
+          tal:define="context_state context/@@plone_context_state;
+                      parent context_state/parent">
+          <div class="app-page-block-content app-page-toolbar-title">
+            <div class="app-page-toolbar-name">Media Manager</div>
+            <small>Manage ${context/Title} set</small>
+          </div>
+          <div class="app-page-block-aside">
+            <a class="app-page-toolbar-action" href="#"
+              tal:attributes="href string:${context/absolute_url}/++add++ade25.assetmanager.stack">
+              <span i18n:translate="">Add new set</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="app-page-header">
+        <div class="app-page-toolbar"
+          tal:define="context_state context/@@plone_context_state;
+                      parent context_state/parent">
+          <a class="app-page-toolbar-action pull-right" href="#"
+            tal:attributes="href string:${context/absolute_url}/++add++ade25.assetmanager.stack">
+            <i class="fa fa-plus"></i>
+            <span i18n:translate="">Add image</span>
+          </a>
+          <a class="app-page-toolbar-action pull-right" href="#"
+            tal:attributes="href string:${context/absolute_url}/folder_contents">
+            <i class="fa fa-th-list"></i>
+            <span i18n:translate="">Manage images</span>
+          </a>
+          <div class="app-page-toolbar-title">
+            <a class="app-page-toolbar-name" href="${parent/absolute_url}">Media Manager</a>
+            &raquo; Manage ${context/Title}
+          </div>
         </div>
       </div>
 

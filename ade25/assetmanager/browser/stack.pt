@@ -16,83 +16,37 @@
           tal:define="context_state context/@@plone_context_state;
                       parent context_state/parent">
           <div class="app-page-block-content app-page-toolbar-title">
-            <div class="app-page-toolbar-name">Media Manager</div>
+            <div class="app-page-toolbar-name"><a href="${parent/absolute_url}">Media Manager</a></div>
             <small>Manage ${context/Title} set</small>
           </div>
           <div class="app-page-block-aside">
-            <a class="app-page-toolbar-action" href="#"
+            <a class="app-page-toolbar-action pull-right" href="${parent/absolute_url}">
+              <span i18n:translate="">Close</span>
+            </a>
+            <a class="app-page-toolbar-action pull-right" href="#"
               tal:attributes="href string:${context/absolute_url}/++add++ade25.assetmanager.stack">
-              <span i18n:translate="">Add new set</span>
+              <span i18n:translate="">Add image</span>
+            </a>
+            <a class="app-page-toolbar-action pull-right" href="#"
+              tal:attributes="href string:${context/absolute_url}/folder_contents">
+              <span i18n:translate="">Manage</span>
             </a>
           </div>
         </div>
-      </div>
-      <div class="app-page-header">
-        <div class="app-page-toolbar"
-          tal:define="context_state context/@@plone_context_state;
-                      parent context_state/parent">
-          <a class="app-page-toolbar-action pull-right" href="#"
-            tal:attributes="href string:${context/absolute_url}/++add++ade25.assetmanager.stack">
-            <i class="fa fa-plus"></i>
-            <span i18n:translate="">Add image</span>
-          </a>
-          <a class="app-page-toolbar-action pull-right" href="#"
-            tal:attributes="href string:${context/absolute_url}/folder_contents">
-            <i class="fa fa-th-list"></i>
-            <span i18n:translate="">Manage images</span>
-          </a>
-          <div class="app-page-toolbar-title">
-            <a class="app-page-toolbar-name" href="${parent/absolute_url}">Media Manager</a>
-            &raquo; Manage ${context/Title}
-          </div>
-        </div>
+        <p class="app-page-abstract">
+                  A dedicated stack or set of related and grouped media assets
+                </p>
       </div>
 
       <div class="app-page-body app-repository-content">
-
-        <div class="app-page-block"
-            tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-            <div class="app-page-block-content app-page-block-main">
-              <aside class="ws-aside">
-                <p class="app-page-abstract">
-                  A dedicated stack or set of related and grouped media assets
-                </p>
-              </aside>
-            </div>
-            <div class="app-page-block-content app-page-block-aside">
-              <div class="app-workspace-card">
-                <tal:block tal:repeat="item view/addable_media_types">
-                  <a class="ws-action"
-                    href="${context/absolute_url}/++add++${item/factory}"
-                    tal:attributes="title item/Description">
-                    <span i18n:translate="">Add new</span>
-                    ${item/Title}
-                  </a>
-                </tal:block>
-              </div>
-            </div>
-        </div>
-          <div class="app-repository-toolbar">
-            <a class="btn btn-link pull-right" href="#"
-              tal:attributes="href string:${context/absolute_url}/++add++Image">
-              <i class="ion ion-ios7-upload-outline app-icon-lg"></i>
-              <span i18n:translate="">Add image</span>
-            </a>
-            <a class="btn btn-link pull-right" href="#"
-              tal:attributes="href string:${context/absolute_url}/folder_contents">
-              <i class="ion ion-ios7-photos-outline app-icon-lg"></i>
-              <span i18n:translate="">Manage assets</span>
-            </a>
-            <div class="app-repository-toolbar-title">Image Stack</div>
-          </div>
-            <div class="app-listing app-listing-cards"
+            <div class="app-cards app-card-gutter app-listing app-listing-cards"
               tal:define="Batch python:modules['Products.CMFPlone'].Batch;
                           b_size python:int(request.get('b_size', 20));
                           b_start python:int(request.get('b_start', 0));
                           results python:context.restrictedTraverse('@@folderListing')(batch=True, b_size=b_size, b_start=b_start);
                           batch python:Batch(results, b_size, b_start);">
-                <div class="app-listing-card" tal:repeat="item results">
-                  <div class="app-card app-card-image"
+                <div class="app-card app-listing-card" tal:repeat="item results">
+                  <div class="app-card-image"
                       <div class="app-card-media">
                           <img class="app-img lazyload"
                               src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="

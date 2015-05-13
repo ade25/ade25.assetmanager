@@ -24,7 +24,7 @@
               <span i18n:translate="">Close</span>
             </a>
             <a class="app-page-toolbar-action pull-right" href="#"
-              tal:attributes="href string:${context/absolute_url}/++add++ade25.assetmanager.stack">
+              tal:attributes="href string:${context/absolute_url}/++add++Image">
               <span i18n:translate="">Add image</span>
             </a>
             <a class="app-page-toolbar-action pull-right" href="#"

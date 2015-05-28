@@ -10,32 +10,30 @@
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
     <div class="app-asset-manager app-am">
-      <div class="app-page-header am-header">
-        <a class="am-close icono-cross" href="${context/absolute_url}">
-          &times;</a>
-        <h1 class="app-page-title am-title">
-          Medien Manager
-        </h1>
-      </div>
-
-      <div class="app-page-block"
-          tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-          <div class="app-page-block-content app-page-block-main">
-            <aside class="ws-aside">
-              <p class="app-page-lead">
-                Edit static asset assignements for this content object
-              </p>
-            </aside>
+      <div class="app-page-header">
+        <div class="app-page-block app-page-toolbar"
+          tal:define="context_state context/@@plone_context_state;
+                      parent context_state/parent">
+          <div class="app-page-block-content app-page-toolbar-title">
+            <div class="app-page-toolbar-name"><a href="${parent/absolute_url}">Media Manager</a></div>
+            <small>Manage ${context/Title} media</small>
           </div>
-          <div class="app-page-block-content app-page-block-aside">
-            <div class="app-workspace-card">
-              <a class="ws-action"
-                href="${context/absolute_url}/++add++Image"
-                i18n:translate="">
-                Add image
-              </a>
-            </div>
+          <div class="app-page-block-aside">
+            <a class="app-page-toolbar-action pull-right" href="${parent/absolute_url}">
+              <span i18n:translate="">Close</span>
+            </a>
+            <a class="app-page-toolbar-action pull-right"
+              href="${context/absolute_url}/@@select-stack"
+              tal:condition="not:view/has_assets">
+              <span i18n:translate="">Add Set</span>
+            </a>
+            <a class="app-page-toolbar-action pull-right" href="#"
+              tal:attributes="href string:${context/absolute_url}/folder_contents"
+              tal:condition="view/has_assets">
+              <span i18n:translate="">Manage</span>
+            </a>
           </div>
+        </div>
       </div>
 
       <div class="app-page-body">

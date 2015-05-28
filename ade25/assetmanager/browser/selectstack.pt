@@ -11,21 +11,26 @@
   <metal:content-core define-macro="main">
 
     <div class="app-page app-page-manager">
-        <div class="pm-toolbar">
-          <div class="pm-navbar">
-            <div class="pm-navbar-item pm-navbar-back">
-              <a tal:attributes="href context/absolute_url">
-                <i class="ion ion-ios7-arrow-thin-left pm-icon"></i>
-                Overview
+        <div class="app-page-header">
+          <div class="app-page-block app-page-toolbar"
+            tal:define="context_state context/@@plone_context_state;
+                        parent context_state/parent">
+            <div class="app-page-block-content app-page-toolbar-title">
+              <div class="app-page-toolbar-name"><a href="${context/absolute_url}/@@asset-manager">Media Manager</a>
+                <small>Select set</small>
+              </div>
+              <small>Manage ${context/Title} media</small>
+            </div>
+            <div class="app-page-block-aside">
+              <a class="app-page-toolbar-action pull-right" href="${context/absolute_url}/@@asset-manager">
+                <span i18n:translate="">Close</span>
               </a>
             </div>
-            <div class="pm-navbar-item pm-navbar-title">
-              <span i18n:translate="">Manage Assets</span>
-            </div>
           </div>
-          <div class="pm-locator">Select Stack</div>
         </div>
+
         <div class="app-page-body app-asset-manager">
+          <div class="h5">Verfügbare Sets</div>
             <div class="app-asset-list" tal:condition="view/has_stacks">
                 <div class="app-asset-list-item"
                   tal:repeat="item view/stacks">

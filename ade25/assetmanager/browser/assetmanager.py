@@ -113,7 +113,10 @@ class AssignAsset(BrowserView):
         base_url = context.absolute_url()
         stack = self.traverse_subpath[0]
         next_url = '{0}/@@select-asset/{1}'.format(base_url, stack)
-        self._add_item()
+        if len(self.subpath) > 1:
+            self._add_item()
+        else:
+            self._add_stack_contents(stack)
         self._propagate('update', stack)
         return self.request.response.redirect(next_url)
 
@@ -128,6 +131,13 @@ class AssignAsset(BrowserView):
 
     def stored_data(self):
         return json.loads(self.assets())
+
+    def has_assignment(self, uuid):
+        stored_assignments = self.stored_data()
+        items = stored_assignments['items']
+        if uuid in items:
+            return True
+        return False
 
     def _add_item(self):
         data = self.stored_data()
@@ -145,6 +155,17 @@ class AssignAsset(BrowserView):
         context_uid = api.content.get_uuid(obj=context)
         data = tool.update(context_uid, data)
         return data
+
+    def _add_stack_contents(self, uuid):
+        data = self.stored_data()
+        stored_items = data['items']
+        stack = api.content.get(UID=uuid)
+        images = stack.restrictedTraverse('@@folderListing')()
+        for item in images:
+            uid = item.UID
+            if not self.has_assignment(uid):
+                stored_items.append(uid)
+        return 'success'
 
     def _propagate(self, action, uuid):
         context = aq_inner(self.context)

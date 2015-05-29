@@ -35,30 +35,32 @@
         </div>
         <div class="app-page-body app-asset-manager"
           tal:define="stack_uid python:view.traverse_subpath[0]">
-            <div class="app-asset-list" tal:condition="view/has_assets">
-                    <div class="app-asset-list-item"
+            <div class="app-asset-list app-cards" tal:condition="view/has_assets">
+                <div class="app-asset-list-item app-card app-listing-card"
                       tal:repeat="item view/contained_assets">
-                      <div class="app-list-metric app-list-metric-thumb">
-                        <img class="app-img lazyload"
+                  <div class="app-card-image"
+                      <div class="app-card-media">
+                          <img class="app-img lazyload"
                               src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                               tal:define="item_obj item/getObject;
                                           scales item_obj/@@images;
-                                          thumbnail python: scales.scale('image', width=50, height=50);"
+                                          thumbnail python: scales.scale('image', width=250, height=250);"
                               tal:condition="thumbnail"
                               tal:attributes="data-src thumbnail/url;
+                                              src thumbnail/url;
                                               width thumbnail/width;
                                               height thumbnail/height" />
                       </div>
-                      <div class="app-list-metric app-list-metric-data">
-                        <h5 tal:content="item/Title" />
+                      <div class="app-card-info app-card-caption">
+                        <div class="app-card-title" tal:content="item/Title" />
                       </div>
-                      <div class="app-list-metric app-list-metric-action">
-                          <a class="metric-action" href="${context/absolute_url}/@@assign-asset/${stack_uid}/${item/UID}">
+                      <div class="app-card-footer">
+                        <a class="metric-action" href="${context/absolute_url}/@@assign-asset/${stack_uid}/${item/UID}">
                             <span i18n:translate="">Select</span>
                             <i class="ion ion-ios7-arrow-right pm-icon"></i>
                           </a>
                       </div>
-                    </div>
+                </div>
               </div>
 
         </div>

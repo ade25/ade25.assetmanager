@@ -8,7 +8,10 @@ from Acquisition import aq_inner
 from Products.Five.browser import BrowserView
 from plone import api
 from plone.app.blob.interfaces import IATBlobImage
+from plone.protect.interfaces import IDisableCSRFProtection
+from zope.component import getMultiAdapter
 from zope.component import getUtility
+from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
 
 from ade25.assetmanager.interfaces import IAssetAssignmentTool
@@ -91,11 +94,31 @@ class SelectAsset(BrowserView):
         images = stack.restrictedTraverse('@@folderListing')()
         return images
 
+    def assets(self):
+        context = aq_inner(self.context)
+        context_uid = api.content.get_uuid(obj=context)
+        data = getattr(context, 'assets')
+        if data is None:
+            tool = getUtility(IAssetAssignmentTool)
+            data = tool.create(context_uid)
+        return data
+
+    def stored_data(self):
+        return json.loads(self.assets())
+
+    def has_assignment(self, uuid):
+        stored_assignments = self.stored_data()
+        items = stored_assignments['items']
+        if uuid in items:
+            return True
+        return False
+
 
 class AssignAsset(BrowserView):
     """ Assign asset to context specific asset storage """
 
     def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
         return self.render()
 
     @property
@@ -112,7 +135,10 @@ class AssignAsset(BrowserView):
         context = aq_inner(self.context)
         base_url = context.absolute_url()
         stack = self.traverse_subpath[0]
-        next_url = '{0}/@@select-asset/{1}'.format(base_url, stack)
+        authenticator = getMultiAdapter((context, self.request),
+                                        name=u"authenticator")
+        next_url = '{0}/@@select-asset/{1}?_authenticator={2}'.format(
+            base_url, stack, authenticator.token())
         if len(self.subpath) > 1:
             self._add_item()
         else:
@@ -171,7 +197,7 @@ class AssignAsset(BrowserView):
         context = aq_inner(self.context)
         pid = api.content.get_uuid(obj=context)
         stack = api.content.get(UID=uuid)
-        assignments = getattr(stack, 'assignments')
+        assignments = getattr(stack, 'assignment')
         plist = list()
         if assignments is not None:
             plist = json.loads(assignments)

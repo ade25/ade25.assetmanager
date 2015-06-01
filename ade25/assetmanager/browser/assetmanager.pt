@@ -61,12 +61,15 @@
         </div>
       </div>
 
-      <div class="app-page-body app-workspace-content">
-        <tal:block tal:condition="not:view/has_assets">
+      <div class="app-page-body app-workspace-content"
+        tal:condition="view/has_assets">
+        <tal:block tal:define="data view/stored_data;
+                               assets python:data['items']">
+          <pre tal:content="assets" />
           <div class="ws-section">
             <div class="ws-section-row">
               <div class="ws-section-content">
-                <h3><a href="${context/absolute_url}/@@image-factory/${context/UID}">Main image</a></h3>
+                <h3><a href="${context/absolute_url}">Main image</a></h3>
                 <p class="ws-section-desc">
                   Add main image serving as a preview in listings and search results
                 </p>

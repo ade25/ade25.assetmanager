@@ -137,13 +137,15 @@ class AssignAsset(BrowserView):
         stack = self.traverse_subpath[0]
         authenticator = getMultiAdapter((context, self.request),
                                         name=u"authenticator")
-        next_url = '{0}/@@select-asset/{1}?_authenticator={2}'.format(
+        next_url = '{0}/@@asset-manager/{1}?_authenticator={2}'.format(
             base_url, stack, authenticator.token())
         if len(self.subpath) > 1:
             self._add_item()
         else:
             self._add_stack_contents(stack)
         self._propagate('update', stack)
+        modified(context)
+        context.reindexObject(idxs='modified')
         return self.request.response.redirect(next_url)
 
     def assets(self):
@@ -191,6 +193,11 @@ class AssignAsset(BrowserView):
             uid = item.UID
             if not self.has_assignment(uid):
                 stored_items.append(uid)
+        data['items'] = stored_items
+        tool = getUtility(IAssetAssignmentTool)
+        context = aq_inner(self.context)
+        context_uid = api.content.get_uuid(obj=context)
+        data = tool.update(context_uid, data)
         return 'success'
 
     def _propagate(self, action, uuid):

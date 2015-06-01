@@ -65,18 +65,27 @@
         tal:condition="view/has_assets">
         <tal:block tal:define="data view/stored_data;
                                assets python:data['items']">
-          <pre tal:content="assets" />
-          <div class="ws-section">
-            <div class="ws-section-row">
+          <div class="ws-section" tal:repeat="item assets">
+            <div class="ws-section-row"
+              tal:define="index repeat/item/number">
+              <div class="ws-section-aside">
+                <figure tal:define="img python:view.image_tag(item)">
+                  <img class="lazyload" data-src="${img/url}"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs="
+                    width="${img/width}" width="${img/height}"
+                    alt="" />
+                </figure>
+              </div>
               <div class="ws-section-content">
-                <h3><a href="${context/absolute_url}">Main image</a></h3>
-                <p class="ws-section-desc">
+                <h3>Asset ${index}
+                </h3>
+                <p class="ws-section-desc" tal:content="item">
                   Add main image serving as a preview in listings and search results
                 </p>
               </div>
               <div class="ws-section-chevron">
-                <a href="${context/absolute_url}/@@image-factory/${context/UID}">
-                  <i class="icono-caretRight app-icon-anchor ws-icon-next" aria-hidden="true"></i>
+                <a href="${context/absolute_url}/@@image-factory/${item}">
+                  <i class="fa fa-angle-right ws-icon-next" aria-hidden="true"></i>
                 </a>
               </div>
             </div>

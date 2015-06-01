@@ -17,6 +17,8 @@ from zope.lifecycleevent import modified
 from ade25.assetmanager.interfaces import IAssetAssignmentTool
 from ade25.assetmanager.stack import IStack
 
+IMG = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs='
+
 
 class AssetManagerView(BrowserView):
     """ Central management unit """
@@ -37,6 +39,21 @@ class AssetManagerView(BrowserView):
 
     def stored_data(self):
         return json.loads(self.assets())
+
+    def image_tag(self, uuid):
+        context = api.content.get(UID=uuid)
+        scales = getMultiAdapter((context, self.request), name='images')
+        scale = scales.scale('image', width=120, height=120)
+        item = {}
+        if scale is not None:
+            item['url'] = scale.url
+            item['width'] = scale.width
+            item['height'] = scale.height
+        else:
+            item['url'] = IMG
+            item['width'] = '1px'
+            item['height'] = '1px'
+        return item
 
 
 class SelectStack(BrowserView):

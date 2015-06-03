@@ -154,8 +154,8 @@ class AssignAsset(BrowserView):
         stack = self.traverse_subpath[0]
         authenticator = getMultiAdapter((context, self.request),
                                         name=u"authenticator")
-        next_url = '{0}/@@asset-manager/{1}?_authenticator={2}'.format(
-            base_url, stack, authenticator.token())
+        next_url = '{0}/@@asset-manager?_authenticator={1}'.format(
+            base_url, authenticator.token())
         if len(self.subpath) > 1:
             self._add_item()
         else:

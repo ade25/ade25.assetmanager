@@ -81,10 +81,10 @@
                   </a>
                 </div>
               </div>
-              <div class="app-listing-nav">
+            </tal:block>
+            <div class="app-listing-nav">
                   <div metal:use-macro="context/batch_macros/macros/navigation" />
               </div>
-            </tal:block>
           </div>
         </div>
 

@@ -19,7 +19,7 @@
             <small>Manage ${context/Title} media</small>
           </div>
           <div class="app-page-block-aside">
-            <a class="app-page-toolbar-action pull-right" href="${parent/absolute_url}">
+            <a class="app-page-toolbar-action pull-right" href="${context/absolute_url}">
               <span i18n:translate="">Close</span>
             </a>
             <a class="app-page-toolbar-action pull-right"

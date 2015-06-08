@@ -14,8 +14,8 @@ from zope.component import getUtility
 from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
 
+from ade25.assetmanager.behaviors.storage import IAssetStorage
 from ade25.assetmanager.interfaces import IAssetAssignmentTool
-from ade25.assetmanager.interfaces import IAssetManagerEnabled
 from ade25.assetmanager.stack import IStack
 
 from ade25.assetmanager import _
@@ -159,10 +159,7 @@ class AssignAsset(BrowserView):
                                         name=u"authenticator")
         next_url = '{0}/@@asset-manager?_authenticator={1}'.format(
             base_url, authenticator.token())
-        if len(self.subpath) > 1:
-            self._add_item()
-        else:
-            self._add_stack_contents(stack)
+        self._add_item(stack)
         self._propagate('update', stack)
         modified(context)
         context.reindexObject(idxs='modified')
@@ -187,13 +184,12 @@ class AssignAsset(BrowserView):
             return True
         return False
 
-    def _add_item(self):
+    def _add_item(self, uuid):
         data = self.stored_data()
-        uid = self.traverse_subpath[1]
         items = data['items']
         item = {
             'id': str(uuid_tool.uuid4()),
-            'uid': uid,
+            'uid': uuid,
             'caption': ''
         }
         items.append(item)
@@ -266,7 +262,7 @@ class ResetAssetStorage(BrowserView):
     def _reset_asset_storage(self):
         tool = getUtility(IAssetAssignmentTool)
         catalog = api.portal.get_tool(name='portal_catalog')
-        worklist = catalog(object_provides=IAssetManagerEnabled.__identifier__)
+        worklist = catalog(object_provides=IAssetStorage.__identifier__)
         idx = 0
         for item in worklist:
             item_uid = api.content.get_uuid(obj=item.getObject())

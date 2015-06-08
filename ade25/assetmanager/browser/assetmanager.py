@@ -2,8 +2,6 @@
 """Module providing asset management views"""
 
 import json
-import uuid as uuid_tool
-
 from Acquisition import aq_inner
 from Products.Five.browser import BrowserView
 from plone import api
@@ -42,6 +40,17 @@ class AssetManagerView(BrowserView):
 
     def stored_data(self):
         return json.loads(self.assets())
+
+    def image_list(self):
+        data = self.stored_data()
+        items = data['items']
+        images = list()
+        for item in items:
+            contained_imgs = item.restrictedTraverse('@@folderListing')()
+            for img in contained_imgs:
+                img_uid = api.content.get_uuid(obj=img.getObject())
+                images.apend(img_uid)
+        return images
 
     def image_tag(self, uuid):
         context = api.content.get(UID=uuid)
@@ -187,12 +196,7 @@ class AssignAsset(BrowserView):
     def _add_item(self, uuid):
         data = self.stored_data()
         items = data['items']
-        item = {
-            'id': str(uuid_tool.uuid4()),
-            'uid': uuid,
-            'caption': ''
-        }
-        items.append(item)
+        items.append(uuid)
         data['items'] = items
         tool = getUtility(IAssetAssignmentTool)
         context = aq_inner(self.context)

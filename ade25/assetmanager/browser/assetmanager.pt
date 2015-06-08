@@ -64,7 +64,7 @@
       <div class="app-page-body app-workspace-content"
         tal:condition="view/has_assets">
         <tal:block tal:define="data view/stored_data;
-                               assets python:data['items']">
+                               assets view/image_list">
           <div class="ws-section" tal:repeat="item assets">
             <div class="ws-section-row"
               tal:define="index repeat/item/number">

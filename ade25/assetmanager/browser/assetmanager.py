@@ -15,7 +15,10 @@ from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
 
 from ade25.assetmanager.interfaces import IAssetAssignmentTool
+from ade25.assetmanager.interfaces import IAssetManagerEnabled
 from ade25.assetmanager.stack import IStack
+
+from ade25.assetmanager import _
 
 IMG = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs='
 
@@ -233,3 +236,40 @@ class AssignAsset(BrowserView):
         modified(stack)
         stack.reindexObject(idxs='modified')
         return 'success'
+
+
+class ResetAssetStorage(BrowserView):
+    """ Reset all asset storage fields
+
+        This utility view is meant to be used during finalizing and
+        development of the storage and management implementation.
+        Should be removed after the initial data structures are
+        in place.
+    """
+
+    def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
+        return self.render()
+
+    def render(self):
+        context = aq_inner(self.context)
+        base_url = api.portal.get().absolute_url()
+        authenticator = getMultiAdapter((context, self.request),
+                                        name=u"authenticator")
+        next_url = '{0}?_authenticator={1}'.format(
+            base_url, authenticator.token())
+        cleaned = self._reset_asset_storage()
+        msg = _(u"{0} asset storage fields have been resetted".format(cleaned))
+        api.portal.show_message(message=msg, request=self.request)
+        return self.request.response.redirect(next_url)
+
+    def _reset_asset_storage(self):
+        tool = getUtility(IAssetAssignmentTool)
+        catalog = api.portal.get_tool(name='portal_catalog')
+        worklist = catalog(object_provides=IAssetManagerEnabled.__identifier__)
+        idx = 0
+        for item in worklist:
+            item_uid = api.content.get_uuid(obj=item.getObject())
+            tool.create(item_uid)
+            idx += 1
+        return idx

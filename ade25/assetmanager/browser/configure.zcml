@@ -63,4 +63,13 @@
       layer="..interfaces.IAde25AssetmanagerLayer"
       />
 
+  <!-- Dangerzone: Utility for assignment resets -->
+  <browser:page
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      name="reset-asset-storage"
+      class=".assetmanager.ResetAssetStorage"
+      permission="cmf.ManagePortal"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
 </configure>

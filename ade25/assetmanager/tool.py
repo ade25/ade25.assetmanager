@@ -46,7 +46,7 @@ class AssetAssignmentTool(object):
         else:
             stored = data
         end = time.time()
-        stored.update(dict(_runtime=end-start,
+        stored.update(dict(_runtime=str(end-start),
                            timestamp=str(int(time.time())),
                            updated=str(datetime.datetime.now())))
         updated = json.dumps(stored)

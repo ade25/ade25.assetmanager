@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Module providing JSON storage for static asset assignments"""
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.autoform import directives as form
 from plone.dexterity.interfaces import IDexterityContent

@@ -46,7 +46,8 @@ class AssetManagerView(BrowserView):
         items = data['items']
         images = list()
         for item in items:
-            contained_imgs = item.restrictedTraverse('@@folderListing')()
+            stack = api.content.get(UID=item)
+            contained_imgs = stack.restrictedTraverse('@@folderListing')()
             for img in contained_imgs:
                 img_uid = api.content.get_uuid(obj=img.getObject())
                 images.apend(img_uid)

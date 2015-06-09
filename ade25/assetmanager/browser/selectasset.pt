@@ -54,21 +54,6 @@
                       <div class="app-card-info app-card-caption">
                         <div class="app-card-title" tal:content="item/Title" />
                       </div>
-                      <div class="app-card-footer"
-                        tal:define="item_uid item/UID;
-                                    selected python:view.has_assignment(item_uid)">
-                        <a class="metric-action"
-                          tal:condition="not:selected"
-                          href="${context/absolute_url}/@@assign-asset/${stack_uid}/${item_uid}">
-                          <span i18n:translate="">Select</span>
-                        </a>
-                        <a class="metric-action"
-                          tal:condition="selected"
-                          href="${context/absolute_url}/@@assign-asset/${stack_uid}/${item_uid}">
-                          <span i18n:translate="">Deselect</span>
-                          <i class="fa fa-check pull-right"></i>
-                        </a>
-                      </div>
                 </div>
               </div>
 

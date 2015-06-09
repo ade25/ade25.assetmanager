@@ -50,7 +50,7 @@ class AssetManagerView(BrowserView):
             contained_imgs = stack.restrictedTraverse('@@folderListing')()
             for img in contained_imgs:
                 img_uid = api.content.get_uuid(obj=img.getObject())
-                images.apend(img_uid)
+                images.append(img_uid)
         return images
 
     def image_tag(self, uuid):

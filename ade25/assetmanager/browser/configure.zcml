@@ -26,6 +26,15 @@
       layer="..interfaces.IAde25AssetmanagerLayer"
       />
 
+  <browser:page
+      for="ade25.assetmanager.stack.IStack"
+      name="stack-preview"
+      class=".stack.StackPreview"
+      template="stackpreview.pt"
+      permission="zope2.View"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
   <!-- Asset Manager views -->
   <browser:page
       for="ade25.assetmanager.behaviors.storage.IAssetStorage"

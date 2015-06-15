@@ -1,0 +1,12 @@
+<tal:preview tal:condition="view/has_contained_items">
+  <img class="app-img lazyload"
+      src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+      tal:define="item_obj view/first_item;
+                  scales first_item/@@images;
+                  thumbnail python: scales.scale('image', width=250, height=250);"
+      tal:condition="thumbnail"
+      tal:attributes="data-src thumbnail/url;
+                      src thumbnail/url;
+                      width thumbnail/width;
+                      height thumbnail/height" />
+</tal:preview>

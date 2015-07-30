@@ -2,8 +2,7 @@
 """Module providing views for asset storage folder"""
 from Products.Five.browser import BrowserView
 from plone import api
-from plone.app.blob.interfaces import IATBlobImage
-
+from plone.app.contenttypes.interfaces import IImage
 
 class AssetRepositoryView(BrowserView):
     """ Folderish content page default view """
@@ -20,6 +19,6 @@ class AssetRepositoryView(BrowserView):
         preview = None
         if len(images):
             first_item = images[0].getObject()
-            if IATBlobImage.providedBy(first_item):
+            if IImage.providedBy(first_item):
                 preview = first_item
         return preview

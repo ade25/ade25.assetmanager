@@ -239,6 +239,37 @@ class AssignAsset(BrowserView):
         return 'success'
 
 
+class ClearAssetStorageConfirm(BrowserView):
+    """ Reset asset storage fields confirmation """
+
+
+class ClearAssetStorage(BrowserView):
+    """ Reset asset storage fields """
+
+    def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
+        return self.render()
+
+    def render(self):
+        context = aq_inner(self.context)
+        base_url = context.absolute_url()
+        authenticator = getMultiAdapter((context, self.request),
+                                        name=u"authenticator")
+        next_url = '{0}?_authenticator={1}'.format(
+            base_url, authenticator.token())
+        cleaned = self._reset_asset_storage()
+        msg = _(u"All asset storage fields have been resetted")
+        api.portal.show_message(message=msg, request=self.request)
+        return self.request.response.redirect(next_url)
+
+    def _reset_asset_storage(self):
+        context = aq_inner(self.context)
+        tool = getUtility(IAssetAssignmentTool)
+        item_uid = api.content.get_uuid(obj=context)
+        tool.create(item_uid)
+        return True
+
+
 class ResetAssetStorage(BrowserView):
     """ Reset all asset storage fields
 

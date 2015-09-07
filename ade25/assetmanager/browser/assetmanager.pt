@@ -28,6 +28,11 @@
               <span i18n:translate="">Add Set</span>
             </a>
             <a class="app-page-toolbar-action pull-right"
+              href="${context/absolute_url}/@@asset-manager-reset-confirmation"
+              tal:condition="view/has_assets">
+              <span i18n:translate="">Clear</span>
+            </a>
+            <a class="app-page-toolbar-action pull-right"
               href="${context/absolute_url}/@@select-stack"
               tal:condition="view/has_assets">
               <span i18n:translate="">Manage</span>

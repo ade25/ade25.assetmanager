@@ -72,6 +72,23 @@
       layer="..interfaces.IAde25AssetmanagerLayer"
       />
 
+      <browser:page
+          for="ade25.assetmanager.behaviors.storage.IAssetStorage"
+          name="asset-manager-reset-confirmation"
+          class=".assetmanager.ClearAssetStorageConfirm"
+          template="resetconfirmation.pt"
+          permission="cmf.ModifyPortalContent"
+          layer="..interfaces.IAde25AssetmanagerLayer"
+          />
+
+  <browser:page
+      for="ade25.assetmanager.behaviors.storage.IAssetStorage"
+      name="asset-manager-reset"
+      class=".assetmanager.ClearAssetStorage"
+      permission="cmf.ModifyPortalContent"
+      layer="..interfaces.IAde25AssetmanagerLayer"
+      />
+
   <!-- Dangerzone: Utility for assignment resets -->
   <browser:page
       for="plone.app.layout.navigation.interfaces.INavigationRoot"
